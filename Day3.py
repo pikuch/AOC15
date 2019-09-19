@@ -22,6 +22,7 @@ for c in data:
 print(len(visited))
 
 # part 2
+
 xs = 0
 ys = 0
 sVisited = {(xs, ys)}
