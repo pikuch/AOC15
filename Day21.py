@@ -17,6 +17,7 @@ weapons = [   # Cost  Damage  Armor
 ["Greataxe",     74,     8,       0]]
 
 armor = [
+["None",          0,     0,       0],
 ["Leather",      13,     0,       1],
 ["Chainmail",    31,     0,       2],
 ["Splintmail",   53,     0,       3],
@@ -24,6 +25,7 @@ armor = [
 ["Platemail",   102,     0,       5]]
 
 rings = [
+["None",          0,     0,       0],
 ["Damage +1",    25,     1,       0],
 ["Damage +2",    50,     2,       0],
 ["Damage +3",   100,     3,       0],
@@ -45,4 +47,40 @@ def sim(bHP, bDamage, bArmor, pHP, pDamage, pArmor, deltaHP, deltaDamage, deltaA
             return False
 
 
-print(sim(bossHP, bossDamage, bossArmor, playerHP, playerDamage, playerArmor, 0, 0, 0))
+lowest_winning_cost = 10**10
+for w in weapons:
+    for a in armor:
+        for r1 in rings:
+            for r2 in rings:
+                if r1 == r2 and r1[0] != "None":
+                    pass
+                else:
+                    cost = w[1] + a[1] + r1[1] + r2[1]
+                    dDamage = w[2] + a[2] + r1[2] + r2[2]
+                    dArmor = w[3] + a[3] + r1[3] + r2[3]
+                    if sim(bossHP, bossDamage, bossArmor, playerHP, playerDamage, playerArmor, 0, dDamage, dArmor):
+                        if cost < lowest_winning_cost:
+                            lowest_winning_cost = cost
+
+
+print(lowest_winning_cost)
+
+# part 2
+
+highest_losing_cost = 0
+for w in weapons:
+    for a in armor:
+        for r1 in rings:
+            for r2 in rings:
+                if r1 == r2 and r1[0] != "None":
+                    pass
+                else:
+                    cost = w[1] + a[1] + r1[1] + r2[1]
+                    dDamage = w[2] + a[2] + r1[2] + r2[2]
+                    dArmor = w[3] + a[3] + r1[3] + r2[3]
+                    if not sim(bossHP, bossDamage, bossArmor, playerHP, playerDamage, playerArmor, 0, dDamage, dArmor):
+                        if cost > highest_losing_cost:
+                            highest_losing_cost = cost
+
+
+print(highest_losing_cost)
